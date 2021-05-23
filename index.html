@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Brygada+1918:wght@600&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Brygada+1918:ital,wght@0,600;1,700&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Brygada+1918:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body >
+    <body onload="tiempo_real();" style="background-color: #596275;">
+    
+    <div style="margin-top: 100px; background-color: #fffa65; width: 680px; height: 335px; border-radius: 20px;" class="container-fluid border border-4">
+        <h1 style="font-family: 'Brygada 1918'; color: #1e272e;" class="mb-4 mt-2"><center>WEATHER APP</center></h1>
+        
+        <h3 class="mb-1" style="font-family: 'Brygada 1918';"><center>Icon</center></h3>
+        
+        <center><img id="icon" class="mb-2"></center>
+
+        <div class="row text-center align-item-center justify-content-center">
+            <div class="col-3">
+                <h3 style="color:#1e272e; font-family: 'Brygada 1918';">Weather</h3>
+                <input type="text" class="form-control"  aria-label="First name" id="weather">
+            </div>
+            <div class="col-2">
+                <h3 style="color:#1e272e; font-family: 'Brygada 1918';">Description</h3>
+                <input type="text" class="form-control" aria-label="Last name" id="description">
+            </div>
+        </div>
+
+        <!-- <div class="col-sm">
+            <label for="inputPassword2" class="visually-hidden">Clima actual</label>
+            <center><input type="text" class="mb-2" id="weather" aria-label="State"></center>
+            
+        </div> -->
+        
+        
+        
+        <!-- <center><input name="dads" id="description" class="border border-4 mb-2" ></center> -->
+        
+    </div>
+
+    
+
+    <script >
+        function tiempo_real(){
+            const socket = io();
+            socket.on('clima', (data) =>{
+                console.log(data);
+                document.getElementById("weather").value = data + ' °C';
+            });
+    
+            socket.on('description', (data) =>{
+                console.log(data);
+                document.getElementById("description").value = data;
+            });
+    
+            socket.on('icon', (data) =>{
+                console.log(data);
+                icon = document.getElementById("icon");
+                fetch(`http://openweathermap.org/img/wn/${data}@2x.png`)
+                    .then((response) => response.blob())
+                    .then(img => icon.setAttribute('src', URL.createObjectURL(img)));
+            });
+    
+            
+            
+        }
+    </script>
+</body>
+</html>
