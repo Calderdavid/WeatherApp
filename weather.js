@@ -1,4 +1,3 @@
-
 const net = require('net');
 const fetch = require('node-fetch');
 
@@ -15,23 +14,10 @@ const server = net.createServer((socket) => {
             clima = parseFloat(clima) - 273.15;
             clima = clima.toFixed(2);
                         
-            // console.log(icon);
-            // console.log(description);         
-            // console.log(typeof(clima), typeof(description), typeof(icon));
-
-            // arrayStrings = {
-            //     clima,
-            //     description,
-            //     icon
-            // };
             socket.write(clima);
-            // socket.write(description);
-            // socket.write(icon);
 
-            
             setTimeout(getClima, 1000);
             
-
             return clima;
         });
 
@@ -39,5 +25,4 @@ const server = net.createServer((socket) => {
     getClima();
 
 })
-
 server.listen(8000, '192.168.1.19');

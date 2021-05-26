@@ -1,4 +1,3 @@
-
 const net = require('net');
 const fetch = require('node-fetch');
 const { array } = require('prop-types');
@@ -15,13 +14,10 @@ const server = net.createServer((socket) => {
             
             icon = data.weather[0].icon;
             
-
             socket.write(icon);
 
-            
             setTimeout(getIcon, 1000);
             
-
             return icon;
         });
 
@@ -29,5 +25,4 @@ const server = net.createServer((socket) => {
     getIcon();
 
 })
-
 server.listen(8002, '192.168.1.19');
